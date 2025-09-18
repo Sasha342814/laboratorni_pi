@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Сторінка Товарів з Випадаючим Списком</title>
+</head>
+
+<body>
+  <h2>Інформація про товар</h2>
+
+  <label for="productSelect">Оберіть товар:</label><br>
+  <select id="productSelect">
+    <option value="" disabled selected>-- Оберіть товар --</option>
+    <option value="Сир">Сир</option>
+    <option value="Сік">Сік</option>
+    <option value="Сметана">Сметана</option>
+  </select><br><br>
+
+  <button onclick="fun1()">Наявна кількість і вартість</button><br><br>
+
+  <label>Кількість на складі:</label>
+  <input type="text" id="quantityField" readonly><br><br>
+
+  <label>Вартість за одиницю:</label>
+  <input type="text" id="priceField" readonly><br><br>
+
+  <button onclick="fun2()">Загальна сума</button><br><br>
+
+  <div id="totalOutput"></div>
+
+  <script>
+
+    const products = ["Сир", "Сік", "Сметана"];
+    const quantities = [12, 30, 18];
+    const prices = [110.0, 35.0, 42.5];
+
+
+    let currentIndex = -1;
+
+    function fun1() {
+      const selectedProduct = document.getElementById("productSelect").value;
+      currentIndex = products.findIndex(p => p === selectedProduct);
+
+      if (currentIndex !== -1) {
+        document.getElementById("quantityField").value = quantities[currentIndex];
+        document.getElementById("priceField").value = prices[currentIndex] + " грн";
+        document.getElementById("totalOutput").innerText = "";
+      } else {
+        document.getElementById("quantityField").value = "";
+        document.getElementById("priceField").value = "";
+        document.getElementById("totalOutput").innerText = "Будь ласка, оберіть товар.";
+      }
+    }
+
+    function fun2() {
+      if (currentIndex !== -1) {
+        const total = quantities[currentIndex] * prices[currentIndex];
+        document.getElementById("totalOutput").innerText =
+          `Загальна вартість товару "${products[currentIndex]}": ${total.toFixed(2)} грн`;
+      } else {
+        document.getElementById("totalOutput").innerText = "Спочатку оберіть товар.";
+      }
+    }
+  </script>
+</body>
+
+</html>

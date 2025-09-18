@@ -1,0 +1,105 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Лабораторна робота 1</title>
+</head>
+
+<body>
+  <h3> Завдання 1.</H3>
+  <p> Це звичайний HTML абзац.</p>
+  <script>
+    document.write("Привіт! Мене звати Харук Олександр Володимирович, студент групи ІПЗ-14.")
+    function calculation() {
+      let x = 30;
+      let y = 10;
+      let z = 1;
+      let sum = x - y;
+      let sum2 = 2 * x * z;
+      let result = sum / sum2;
+      alert(result);
+    }
+  </script>
+  <form>
+    <input type="button" value="Click me" onClick="alert('Я народився 14.09.2007 року в місті Івано-Франківськ ')">
+    <br>
+    <input type="button" value="calculation" onClick="calculation()">
+    <br>
+    <input type="text" value="blur focus" class='onBlurFocus'>
+    <br>
+    <p id="myText">Натисни на мене!</p>
+  </form>
+
+
+  <script>
+    let input = document.querySelector(".onBlurFocus");
+    console.log(input)
+    function inputBlur() {
+      input.value = "Focus has been lost";
+    }
+    function inputFocus() {
+      input.value = "Focus is here";
+    }
+    input.onblur = inputBlur;
+    input.onfocus = inputFocus;
+    let p = document.getElementById("myText");
+
+    p.onclick = function (event) {
+      alert("moot!");
+    };
+    function fun() {
+      let a, b, c, d;
+      a = parseInt(main_form.t_a.value);
+      b = parseInt(main_form.t_b.value);
+      c = parseInt(main_form.t_c.value);
+      if (a > 0 && b > 0) d = 2 * a + b; else
+        if (a < 3 && b > 4) d = a * a + 2 * b * b; else
+          d = a * a * a - Math.sqrt(b);
+      main_form.t_d.value = "" + d;
+    }
+    function factorial(n) {
+      if (n === 0 || n === 1) return 1;
+      let result = 1;
+      for (let i = 2; i <= n; i++) {
+        result *= i;
+      }
+      return result;
+    }
+
+    function calculateSum() {
+      const x = parseFloat(document.getElementById('x').value);
+      const y = parseFloat(document.getElementById('y').value);
+      let sum = 0;
+
+      for (let i = 3; i <= 5; i++) {
+        const numerator = 2 * x * y - y * y + x * factorial(i);
+        const denominator = 3 * x;
+        const term = Math.pow(-1, i + 1) * (numerator / denominator);
+        sum += term;
+      }
+
+      document.getElementById('result').innerText = sum.toFixed(4);
+    }
+  </script>
+  <form id="main_form">
+    a<input type="text" id="t_a" value="2"><br>
+    b<input type="text" id="t_b" value="3"><br>
+    c<input type="text" id="t_c" value="4"><br>
+    d<input type="text" id="t_d" value=""><br>
+    <input type="button" onClick="fun();" value="Розрахувати">
+  </form>
+  <h2>Обчислення суми ряду </h2>
+  <label for="x">Введіть x:</label>
+  <input type="number" id="x" step="any"><br><br>
+
+  <label for="y">Введіть y:</label>
+  <input type="number" id="y" step="any"><br><br>
+
+  <button onclick="calculateSum()">Обчислити</button>
+
+  <h3>Результат: <span id="result"></span></h3>
+  <a href="lab1_task6.html" target="_blank">Сторінка товарів</a>
+
+</body>
+
+</html>
