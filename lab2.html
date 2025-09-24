@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Лабораторна робота №2</title>
+</head>
+<style>
+  .time {
+    width: 150px;
+
+  }
+</style>
+
+<body onLoad="clock()">
+  <form name="clock">
+    Час:
+    <input class=time type="text" name="time" size="8" value="">
+  </form>
+  <h3>Калькулятор</h3>
+  <input type="text" id="display" readonly><br><br>
+
+  <button onclick="add('7')">7</button>
+  <button onclick="add('8')">8</button>
+  <button onclick="add('9')">9</button>
+  <button onclick="add('/')">/</button><br>
+
+  <button onclick="add('4')">4</button>
+  <button onclick="add('5')">5</button>
+  <button onclick="add('6')">6</button>
+  <button onclick="add('*')">*</button><br>
+
+  <button onclick="add('1')">1</button>
+  <button onclick="add('2')">2</button>
+  <button onclick="add('3')">3</button>
+  <button onclick="add('-')">-</button><br>
+
+  <button onclick="add('0')">0</button>
+  <button onclick="add('.')">.</button>
+  <button onclick="calculate()">=</button>
+  <button onclick="add('+')">+</button><br><br>
+
+  <button onclick="clearDisplay()">C</button><br>
+  <script>
+    function pad(n) {
+      return (n < 10 ? "0" : "") + n;
+    }
+
+    function clock() {
+      let now = new Date();
+
+      let hours = pad(now.getHours());
+      let minutes = pad(now.getMinutes());
+      let seconds = pad(now.getSeconds());
+
+      let year = now.getFullYear();
+      let month = pad(now.getMonth() + 1);
+      let day = pad(now.getDate());
+      let timeStr = hours + "/" + minutes + "/" + seconds +
+        "+" + year + "*" + month + "*" + day;
+      document.clock.time.value = timeStr;
+      setTimeout(clock, 1000);
+    }
+    const display = document.getElementById("display");
+
+    function add(symbol) {
+      display.value += symbol;
+    }
+
+    function calculate() {
+      try {
+        display.value = eval(display.value);
+      } catch {
+        display.value = "Помилка";
+      }
+    }
+
+    function clearDisplay() {
+      display.value = "";
+    }
+
+  </script>
+  <a href="lab2_task3.html" target="_blank">Завдання 3 </a>
+</body>
+
+</html>

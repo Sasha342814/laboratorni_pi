@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Завдання 3</title>
+  <style>
+    table,
+    td,
+    th {
+      border: 1px solid black;
+      border-collapse: collapse;
+      padding: 5px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>Генерація таблиці</h2>
+  <label>Кількість рядків: <input type="number" id="rows" min="1"></label><br><br>
+  <label>Кількість стовпців: <input type="number" id="cols" min="1"></label><br><br>
+  <button onclick="generateTable()">Створити таблицю</button>
+
+  <h3>Таблиця:</h3>
+  <div id="tableContainer"></div>
+  <h3 id="result"></h3>
+
+  <script>
+    function generateTable() {
+      let rows = parseInt(document.getElementById("rows").value);
+      let cols = parseInt(document.getElementById("cols").value);
+      let container = document.getElementById("tableContainer");
+      container.innerHTML = "";
+
+      let table = document.createElement("table");
+      let sumSecondRow = 0;
+
+      for (let i = 1; i <= rows; i++) {
+        let tr = document.createElement("tr");
+        for (let j = 1; j <= cols; j++) {
+          let td = document.createElement("td");
+          let val = -5 * j + 3 * i;
+          td.innerText = val;
+          tr.appendChild(td);
+
+          if (i === 2) {
+            sumSecondRow += val;
+          }
+        }
+        table.appendChild(tr);
+      }
+      container.appendChild(table);
+
+      document.getElementById("result").innerText =
+        "Сума елементів другого рядка = " + sumSecondRow;
+    }
+  </script>
+</body>
+
+</html>
