@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Лабораторна робота №2</title>
+  <style>
+    label {
+      display: block;
+      margin: 8px 0 4px;
+    }
+
+    input {
+      margin-bottom: 10px;
+      padding: 4px;
+    }
+  </style>
+</head>
+
+<body>
+  <h3>Розрахунок площі трапеції</h3>
+
+  <label>Основа a:
+    <input type="number" id="a" value="5">
+  </label>
+
+  <label>Основа b:
+    <input type="number" id="b" value="7">
+  </label>
+
+  <label>Висота h:
+    <input type="number" id="h" value="4">
+  </label>
+
+  <p><b>Площа</b>: <span id="area">24</span></p>
+  <a target="_blank" href="lab3_task2.html">Завдання 2</a>
+
+  <script>
+    const aInput = document.getElementById("a");
+    const bInput = document.getElementById("b");
+    const hInput = document.getElementById("h");
+    const areaSpan = document.getElementById("area");
+
+    function calculateArea() {
+      let a = parseFloat(aInput.value) || 0;
+      let b = parseFloat(bInput.value) || 0;
+      let h = parseFloat(hInput.value) || 0;
+      let area = ((a + b) / 2) * h;
+      areaSpan.textContent = area;
+    }
+
+
+    aInput.addEventListener("input", calculateArea);
+    bInput.addEventListener("input", calculateArea);
+    hInput.addEventListener("input", calculateArea);
+
+    calculateArea();
+  </script>
+</body>
+
+</html>

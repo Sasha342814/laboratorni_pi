@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Завдання 5</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      text-align: center;
+    }
+
+    input {
+      padding: 5px;
+      font-size: 16px;
+      width: 100px;
+      text-align: center;
+    }
+
+    button {
+      padding: 8px 16px;
+      margin: 5px;
+      font-size: 16px;
+    }
+
+    #task {
+      font-size: 20px;
+      margin: 15px 0;
+    }
+
+    #result {
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    #score {
+      margin-top: 15px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>Арифметичний тренажер</h2>
+
+
+  <div id="task">Завдання з'явиться тут</div>
+
+
+  <input type="text" id="answer" placeholder="Відповідь">
+
+  <div>
+    <button onclick="checkAnswer()">Перевірити</button>
+    <button onclick="nextTask()">Наступне завдання</button>
+  </div>
+
+
+  <div id="result"></div>
+
+
+  <div id="score"></div>
+  <br>
+  <a target="_blank" href="lab3_task6.html">Завдання 6</a>
+
+  <script>
+    let num1, num2, operation, correctAnswer;
+    let questionCount = 0;
+    let correctCount = 0;
+    const maxQuestions = 5;
+
+    const taskDiv = document.getElementById("task");
+    const answerInput = document.getElementById("answer");
+    const resultDiv = document.getElementById("result");
+    const scoreDiv = document.getElementById("score");
+
+
+    function generateTask() {
+      num1 = Math.floor(Math.random() * 10);
+      num2 = Math.floor(Math.random() * 10);
+      let operations = ["+", "-", "*", "/"];
+      operation = operations[Math.floor(Math.random() * operations.length)];
+
+
+      if (operation === "/" && num2 === 0) {
+        num2 = 1;
+      }
+
+
+      switch (operation) {
+        case "+": correctAnswer = num1 + num2; break;
+        case "-": correctAnswer = num1 - num2; break;
+        case "*": correctAnswer = num1 * num2; break;
+        case "/": correctAnswer = parseFloat((num1 / num2).toFixed(2)); break;
+      }
+
+      taskDiv.textContent = `${num1} ${operation} ${num2} = ?`;
+      answerInput.value = "";
+      resultDiv.textContent = "";
+    }
+
+
+    function checkAnswer() {
+      if (questionCount >= maxQuestions) return;
+
+      let userAnswer = answerInput.value.trim();
+      if (userAnswer === "") return;
+
+      let isCorrect;
+      if (operation === "/") {
+        isCorrect = Math.abs(parseFloat(userAnswer) - correctAnswer) < 0.01;
+      } else {
+        isCorrect = parseInt(userAnswer) === correctAnswer;
+      }
+
+      if (isCorrect) {
+        correctCount++;
+        resultDiv.textContent = "✅ Правильно!";
+        resultDiv.style.color = "green";
+      } else {
+        resultDiv.textContent = `❌ Помилка, правильна відповідь: ${correctAnswer}`;
+        resultDiv.style.color = "red";
+      }
+
+      questionCount++;
+      scoreDiv.textContent = `Рахунок: ${correctCount} з ${questionCount}`;
+
+      if (questionCount === maxQuestions) {
+        taskDiv.textContent = "Тест завершено!";
+      }
+    }
+
+
+    function nextTask() {
+      if (questionCount >= maxQuestions) {
+        resultDiv.textContent = "Ви вже виконали всі завдання.";
+        return;
+      }
+      generateTask();
+    }
+
+
+    generateTask();
+  </script>
+</body>
+
+</html>

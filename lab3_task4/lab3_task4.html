@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Завдання 4 </title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+
+    img {
+      max-width: 1000px;
+      height: auto;
+      border: 2px solid #333;
+      margin-bottom: 15px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <h3>Перегляд зображень</h3>
+
+
+  <div>
+    <img id="gallery" src="" alt="Зображення">
+  </div>
+
+
+  <div>
+    <button onclick="prevImage()">Назад</button>
+    <button onclick="nextImage()">Вперед</button>
+  </div>
+  <br>
+  <a href="../lab3_task5.html">Завдання 5</a>
+  <script>
+
+    let images = ['images.jpg', 'images2.jpg', 'images3.jpg', 'images4.jpg'];
+    let currentIndex = 0;
+    let gallery = document.getElementById("gallery");
+
+    function updateImage() {
+      gallery.src = images[currentIndex];
+    }
+
+    function nextImage() {
+      currentIndex++;
+      if (currentIndex >= images.length) {
+        currentIndex = 0;
+      }
+      updateImage();
+    }
+
+
+    function prevImage() {
+      currentIndex--;
+      if (currentIndex < 0) {
+        currentIndex = images.length - 1;
+      }
+      updateImage();
+    }
+
+    updateImage();
+  </script>
+</body>
+
+</html>
