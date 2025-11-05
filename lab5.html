@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="uk">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Лаб. робота — вкладки, тема, модалка, меню</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <header class="site-header">
+    <div class="brand">Мій сайт</div>
+    <button id="burger" class="burger" aria-label="toggle menu">☰</button>
+
+    <nav class="nav" id="nav">
+      <a href="#">Головна</a>
+      <a href="#">Про</a>
+      <a href="#">Контакт</a>
+    </nav>
+
+    <div class="header-controls">
+      <button id="themeBtn" class="btn">Змінити тему</button>
+      <button id="openModal" class="btn">Показати повідомлення</button>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <div id="tabbed_box_1" class="tabbed_box">
+      <h4>Browse Site <small>Select a Tab</small></h4>
+
+      <div class="tabbed_area">
+        <ul class="tabs">
+          <li><a href="javascript:tabSwitch('tab_1','content_1');" id="tab_1" class="active">Topics</a></li>
+          <li><a href="javascript:tabSwitch('tab_2','content_2');" id="tab_2">Archives</a></li>
+          <li><a href="javascript:tabSwitch('tab_3','content_3');" id="tab_3">Pages</a></li>
+        </ul>
+
+        <div id="content_1" class="content">
+          <ul>
+            <li><a href="">HTML Techniques <small>4 Posts</small></a></li>
+            <li><a href="">CSS Styling <small>32 Posts</small></a></li>
+            <li><a href="">Flash Tutorials <small>2 Posts</small></a></li>
+            <li><a href="">Web Miscellanea <small>19 Posts</small></a></li>
+          </ul>
+        </div>
+
+        <div id="content_2" class="content" style="display:none;">
+          <ul>
+            <li><a href="">December 2008 <small>6 Posts</small></a></li>
+            <li><a href="">November 2008 <small>4 Posts</small></a></li>
+            <li><a href="">October 2008 <small>22 Posts</small></a></li>
+          </ul>
+        </div>
+
+        <div id="content_3" class="content" style="display:none;">
+          <ul>
+            <li><a href="">Home</a></li>
+            <li><a href="">About</a></li>
+            <li><a href="">Contribute</a></li>
+            <li><a href="">Contact</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+
+  <div id="modal" class="modal hidden" role="dialog" aria-hidden="true">
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-window" role="document">
+      <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+      <h3>Повідомлення</h3>
+      <p>Це модальне вікно. Клік поза вікном або на ✕ закриває його.</p>
+    </div>
+  </div>
+
+  <script>
+
+    function tabSwitch(new_tab, new_content) {
+
+      var contents = document.querySelectorAll('.tabbed_area .content');
+      contents.forEach(function (c) { c.style.display = 'none'; });
+
+
+      var target = document.getElementById(new_content);
+      if (target) target.style.display = 'block';
+
+
+      document.getElementById('tab_1').className = '';
+      document.getElementById('tab_2').className = '';
+      document.getElementById('tab_3').className = '';
+      var t = document.getElementById(new_tab);
+      if (t) t.className = 'active';
+    }
+
+
+    var themeBtn = document.getElementById('themeBtn');
+    themeBtn.addEventListener('click', function () {
+      document.body.classList.toggle('dark');
+    });
+
+
+    var modal = document.getElementById('modal');
+    var openModal = document.getElementById('openModal');
+    var closeModal = document.getElementById('modalClose');
+    var fallbackBackdrop = document.getElementById('modalBackdrop');
+
+    function showModal() {
+      modal.classList.remove('hidden');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+    function hideModal() {
+      modal.classList.add('hidden');
+      modal.setAttribute('aria-hidden', 'true');
+    }
+    openModal.addEventListener('click', showModal);
+    closeModal.addEventListener('click', hideModal);
+    fallbackBackdrop.addEventListener('click', hideModal);
+
+
+    var burger = document.getElementById('burger');
+    var nav = document.getElementById('nav');
+    burger.addEventListener('click', function () {
+      nav.classList.toggle('open');
+    });
+  </script>
+
+</body>
+
+</html>
