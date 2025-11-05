@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Лабораторна робота № 6</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+    }
+
+    form {
+      width: 400px;
+      padding: 20px;
+      border: 2px solid #aaa;
+      border-radius: 10px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+      position: relative;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    .valid {
+      border-color: green;
+      color: green;
+    }
+
+    .invalid {
+      border-color: red;
+      color: red;
+    }
+
+    .msg {
+      position: absolute;
+      right: -180px;
+      top: 35px;
+      width: 160px;
+      font-size: 12px;
+      color: red;
+    }
+
+    .checkmark {
+      position: absolute;
+      right: -20px;
+      top: 38px;
+      color: green;
+      font-size: 18px;
+    }
+
+    hr {
+      margin: 20px 0;
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <h2>Завдання 2.1–2.2. Форма перевірки</h2>
+
+  <form id="myForm" onsubmit="return validateForm()">
+    <div class="form-group">
+      <label for="email">E-mail:</label>
+      <input type="text" id="email">
+      <span class="msg"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="fullname">Ім’я та прізвище:</label>
+      <input type="text" id="fullname">
+      <span class="msg"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="login">Логін:</label>
+      <input type="text" id="login">
+      <span class="msg"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Пароль:</label>
+      <input type="password" id="password">
+      <span class="msg"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="index">Поштовий індекс:</label>
+      <input type="text" id="index">
+      <span class="msg"></span>
+    </div>
+
+    <button type="submit">Перевірити</button>
+  </form>
+
+  <script>
+    function validateForm() {
+
+      const email = document.getElementById("email");
+      const fullname = document.getElementById("fullname");
+      const login = document.getElementById("login");
+      const password = document.getElementById("password");
+      const index = document.getElementById("index");
+
+
+      document.querySelectorAll(".msg").forEach(msg => msg.innerHTML = "");
+
+      let valid = true;
+
+
+      const emailR = /^[a-z0-9._%+-]+@pnu\.edu\.ua$/i;
+      const fullnameR = /^[A-ZА-ЯЇІЄ][a-zа-яїіє]+ [A-ZА-ЯЇІЄ]+$/;
+      const loginR = /^[a-zA-Z]+$/;
+      const passwordR = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[_\-!@#$%^&*])[A-Za-z\d_\-!@#$%^&*]{8,}$/;
+      const indexR = /^\d{5}$/;
+
+
+      valid &= check(email, emailR, "E-mail має закінчуватись на @pnu.edu.ua");
+      valid &= check(fullname, fullnameR, "Формат: Ім’я (з великої), Прізвище (всі великі)");
+      valid &= check(login, loginR, "Логін лише латинські літери");
+      valid &= check(password, passwordR, "Мін. 8 символів, 1 літера, 1 цифра, 1 спецсимвол");
+      valid &= check(index, indexR, "Індекс має містити 5 цифр");
+
+      return false;
+    }
+
+    function check(input, regex, message) {
+      const msg = input.nextElementSibling;
+      const oldCheck = input.parentNode.querySelector(".checkmark");
+      if (oldCheck) oldCheck.remove();
+
+      if (regex.test(input.value)) {
+        input.classList.remove("invalid");
+        input.classList.add("valid");
+        msg.textContent = "";
+        const mark = document.createElement("span");
+        mark.className = "checkmark";
+        mark.textContent = "✔";
+        input.parentNode.appendChild(mark);
+        return true;
+      } else {
+        input.classList.remove("valid");
+        input.classList.add("invalid");
+        msg.textContent = message;
+        return false;
+      }
+    }
+  </script>
+
+</body>
+
+</html>
