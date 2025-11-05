@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Лабораторна робота 7. Робота з рядками (JS)</title>
+</head>
+
+<body>
+  <h2>Лабораторна робота 7. Робота з рядками</h2>
+  <script>
+    // ===== Завдання 1 =====
+    function stringLength() {
+      let str = prompt("Введіть рядок:");
+      document.write("<b>1. Довжина рядка:</b> " + str.length + "<br>");
+    }
+    stringLength();
+
+    // ===== Завдання 2 =====
+    function toUpperAndLower() {
+      let str = prompt("Введіть рядок для зміни регістру:");
+      document.write("<b>2. У верхньому регістрі:</b> " + str.toUpperCase() + "<br>");
+      document.write("<b>   У нижньому регістрі:</b> " + str.toLowerCase() + "<br>");
+    }
+    toUpperAndLower();
+
+    // ===== Завдання 3 =====
+    function findCharIndex() {
+      let str = prompt("Введіть рядок:");
+      let ch = prompt("Введіть символ для пошуку:");
+      let index = str.indexOf(ch);
+      document.write("<b>3. Індекс першого входження символу '" + ch + "':</b> " + index + "<br>");
+    }
+    findCharIndex();
+
+    // ===== Завдання 4 =====
+    function countCharOccurrences() {
+      let str = prompt("Введіть рядок:");
+      let ch = prompt("Введіть символ для підрахунку:");
+      let count = 0;
+      for (let i = 0; i < str.length; i++) {
+        if (str[i] === ch) count++;
+      }
+      document.write("<b>4. Кількість входжень '" + ch + "':</b> " + count + "<br>");
+    }
+    countCharOccurrences();
+
+    // ===== Завдання 5 =====
+    function swapPairs() {
+      let str = prompt("Введіть рядок для обміну символів:");
+      let result = "";
+      for (let i = 0; i < str.length; i += 2) {
+        if (i + 1 < str.length)
+          result += str[i + 1] + str[i];
+        else
+          result += str[i];
+      }
+      document.write("<b>5. Результат обміну:</b> " + result + "<br>");
+    }
+    swapPairs();
+
+    // ===== Завдання 6 =====
+    function checkSpam() {
+      let str = prompt("Введіть рядок для перевірки на спам:").toLowerCase();
+      let spamWords = ["100% безкоштовно", "збільшення продажів", "тільки сьогодні", "не видаляйте"];
+      let isSpam = spamWords.some(word => str.includes(word));
+      document.write("<b>6. Містить спам:</b> " + isSpam + "<br>");
+    }
+    checkSpam();
+
+    // ===== Завдання 7 =====
+    function truncateString() {
+      let str = prompt("Введіть рядок для скорочення:");
+      let maxLength = parseInt(prompt("Введіть максимальну довжину:"));
+      let result = str;
+      if (str.length > maxLength) {
+        result = str.slice(0, maxLength - 3) + "...";
+      }
+      document.write("<b>7. Скорочений рядок:</b> " + result + "<br>");
+    }
+    truncateString();
+
+    // ===== Завдання 8 =====
+    function removeDigits() {
+      let str = prompt("Введіть рядок з цифрами:");
+      let result = str.replace(/[0-9]/g, "");
+      document.write("<b>8. Рядок без цифр:</b> " + result + "<br>");
+    }
+    removeDigits();
+
+    // ===== Завдання 9 =====
+    function replaceSubstring() {
+      let str = prompt("Введіть рядок:");
+      let sub = prompt("Що замінюємо?");
+      let repl = prompt("На що замінюємо?");
+      let result = str.replaceAll(sub, repl);
+      document.write("<b>9. Після заміни:</b> " + result + "<br>");
+    }
+    replaceSubstring();
+
+    // ===== Завдання 10 =====
+    function areAnagrams() {
+      let str1 = prompt("Введіть перший рядок:");
+      let str2 = prompt("Введіть другий рядок:");
+
+      function sortStr(s) {
+        return s.split("").sort().join("");
+      }
+
+      let result = sortStr(str1) === sortStr(str2);
+      document.write("<b>10. Є анаграмами:</b> " + result + "<br>");
+    }
+    areAnagrams();
+  </script>
+</body>
+
+</html>
