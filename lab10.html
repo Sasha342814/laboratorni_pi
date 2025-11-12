@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Лабораторна робота 10 — Завдання 3</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    #myDiv {
+      width: 200px;
+      height: 100px;
+      background-color: lightgray;
+      text-align: center;
+      line-height: 100px;
+      margin-top: 20px;
+      border-radius: 10px;
+      transition: 0.3s;
+    }
+
+    .styled {
+      border: 3px solid blue;
+      background-color: lightblue;
+      color: darkblue;
+      font-weight: bold;
+    }
+
+    #image {
+      display: none;
+      width: 200px;
+      margin-top: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    #hint {
+      display: none;
+      position: absolute;
+      background: #222;
+      color: #fff;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 12px;
+    }
+
+    form {
+      margin-top: 20px;
+    }
+
+    span {
+      color: red;
+      font-weight: bold;
+      display: none;
+    }
+  </style>
+
+  <script>
+    $(document).ready(function () {
+      
+      $("#myDiv").bind("click", function () {
+        $(this).addClass("styled");
+      });
+
+      $("#myDiv").bind("dblclick", function () {
+        $(this).removeClass("styled");
+      });
+
+      
+      $("#btn1").bind("click", function () {
+        alert("Одинарний клік");
+      });
+
+      $("#btn2").bind("dblclick", function () {
+        alert("Подвійний клік");
+      });
+
+      
+      $("#showImage").bind("click", function () {
+        $("#image").fadeIn(400);
+      });
+
+      $("#image").bind("click", function () {
+        $(this).fadeOut(400);
+      });
+
+     
+      $("#image").bind("mouseover", function (event) {
+        $("#hint").text("Це підпис до зображення").css({
+          top: event.pageY + 10,
+          left: event.pageX + 10
+        }).fadeIn(200);
+      });
+
+      $("#image").bind("mouseout", function () {
+        $("#hint").fadeOut(200);
+      });
+
+      
+      $("form").submit(function () {
+        if ($("input:first").val() == "correct") {
+          $("span").text("Успішно!").css("color", "green").show();
+          return true;
+        }
+        $("span").text("Неправильно!").css("color", "red").show().fadeOut(1500);
+        return false;
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <h1>Лабораторна робота 10 — Завдання 3</h1>
+
+ 
+  <div id="myDiv">Клікни або двічі клікни</div>
+
+  
+  <button id="btn1">Кнопка 1</button>
+  <button id="btn2">Кнопка 2</button>
+
+
+  <p id="showImage" style="cursor: pointer; color: blue; text-decoration: underline;">
+    Показати зображення
+  </p>
+  <img id="image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/JPEG_example_flower.jpg/320px-JPEG_example_flower.jpg" alt="Квітка">
+  <div id="hint"></div>
+
+  
+  <p>Введіть в текстове поле слово 'correct'.</p>
+
+  <form action="javascript:void(0);">
+    <div>
+      <input type="text" />
+      <input type="submit" value="Перевірити" />
+    </div>
+  </form>
+  <span></span>
+</body>
+</html>
