@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Лабораторна робота — JavaScript (дата, класи, час)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    h2 {
+      color: #003366;
+    }
+
+    button {
+      margin: 5px 0;
+      padding: 6px 12px;
+    }
+
+    input {
+      margin: 5px;
+    }
+
+    .result {
+      margin-top: 10px;
+      color: #333;
+      font-weight: bold;
+    }
+
+    hr {
+      margin: 20px 0;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ======== Завдання 1 ======== -->
+  <h2>Завдання 1. Об’єкт часу</h2>
+  <div>
+    <p id="timeDisplay"></p>
+    <button onclick="showTime()">1.1 Показати поточний час</button><br>
+    <input type="number" id="secondsInput" placeholder="Кількість секунд">
+    <button onclick="changeTime()">1.2 Змінити час</button>
+  </div>
+  <div class="result" id="timeResult"></div>
+  <hr>
+  <!-- ======== Завдання 2.1 ======== -->
+  <h2>Завдання 2.1. Виведення поточної дати, дня тижня і часу</h2>
+  <button onclick="showCurrentDate()">Виконати</button>
+  <div class="result" id="dateResult"></div>
+
+  <!-- ======== Завдання 2.2 ======== -->
+  <h2>Завдання 2.2. Останній день місяця</h2>
+  <label>Рік: <input type="number" id="yearInput"></label>
+  <label>Місяць (1-12): <input type="number" id="monthInput"></label>
+  <button onclick="getLastDay()">Визначити</button>
+  <div class="result" id="lastDayResult"></div>
+
+  <!-- ======== Завдання 2.3 ======== -->
+  <h2>Завдання 2.3. Секунди від початку дня</h2>
+  <button onclick="getSecondsInfo()">Показати</button>
+  <div class="result" id="secondsInfoResult"></div>
+
+  <hr>
+
+  <!-- ======== Завдання 3 ======== -->
+  <h2>Завдання 3. Клас Car</h2>
+  <div>
+    <label>Бренд: <input id="carBrand" type="text"></label>
+    <label>Модель: <input id="carModel" type="text"></label>
+    <label>Рік: <input id="carYear" type="number"></label><br>
+    <button onclick="createCar()">Показати інформацію</button>
+  </div>
+  <div class="result" id="carInfo"></div>
+
+  <hr>
+
+  <!-- ======== Завдання 4 ======== -->
+  <h2>Завдання 4. Клас ElectricCar (наслідування)</h2>
+  <div>
+    <label>Бренд: <input id="eBrand" type="text"></label>
+    <label>Модель: <input id="eModel" type="text"></label>
+    <label>Рік: <input id="eYear" type="number"></label>
+    <label>Батарея (kWh): <input id="eBattery" type="number"></label><br>
+    <button onclick="createElectricCar()">Показати інформацію</button>
+  </div>
+  <div class="result" id="eCarInfo"></div>
+
+  <hr>
+
+  <!-- ======== Завдання 5 ======== -->
+  <h2>Завдання 5. Статичний метод</h2>
+  <div>
+    <label>a: <input id="numA" type="number"></label>
+    <label>b: <input id="numB" type="number"></label>
+    <button onclick="useMathHelper()">Обчислити суму</button>
+  </div>
+  <div class="result" id="mathResult"></div>
+
+  <hr>
+
+  <!-- ======== Завдання 6  ======== -->
+  <h2>Завдання 6. Варіант 7 — Класи Product та DiscountProduct</h2>
+  <div>
+    <label>Назва: <input id="pName" type="text"></label>
+    <label>Ціна: <input id="pPrice" type="number"></label>
+    <label>Кількість: <input id="pQuantity" type="number"></label>
+    <label>Знижка (%): <input id="pDiscount" type="number"></label><br>
+    <button onclick="showProductInfo()">Показати інформацію</button>
+    <button onclick="clearProduct()">Очистити поля</button>
+  </div>
+  <div class="result" id="productResult"></div>
+
+  <script>
+    // ===== Завдання 1 =====
+    function getCurrentTime() {
+      const now = new Date();
+      return {
+        hours: now.getHours(),
+        minutes: now.getMinutes(),
+        seconds: now.getSeconds()
+      };
+    }
+
+    function formatTime(t) {
+      return `${t.hours.toString().padStart(2, '0')}:${t.minutes
+        .toString()
+        .padStart(2, '0')}:${t.seconds.toString().padStart(2, '0')}`;
+    }
+
+    function showTime() {
+      const current = getCurrentTime();
+      document.getElementById('timeDisplay').innerText =
+        `Поточний час: ${formatTime(current)}`;
+    }
+
+    function changeTime() {
+      const sec = parseInt(document.getElementById('secondsInput').value);
+      if (isNaN(sec)) return alert('Введіть кількість секунд!');
+
+      const now = new Date();
+      now.setSeconds(now.getSeconds() + sec);
+
+      const newTime = {
+        hours: now.getHours(),
+        minutes: now.getMinutes(),
+        seconds: now.getSeconds()
+      };
+
+      document.getElementById('timeResult').innerText =
+        `Новий час: ${formatTime(newTime)}`;
+    }
+
+    // ===== Завдання 2.1 =====
+    function showCurrentDate() {
+      const now = new Date();
+      const days = ['неділя', 'понеділок', 'вівторок', 'середа', 'четвер', 'пʼятниця', 'субота'];
+      const months = ['січня', 'лютого', 'березня', 'квітня', 'травня', 'червня', 'липня', 'серпня', 'вересня', 'жовтня', 'листопада', 'грудня'];
+      const text = `
+        Дата: ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()} року<br>
+        День тижня: ${days[now.getDay()]}<br>
+        Час: ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}
+      `;
+      document.getElementById('dateResult').innerHTML = text;
+    }
+
+    // ===== Завдання 2.2 =====
+    function getLastDay() {
+      const year = parseInt(document.getElementById('yearInput').value);
+      const month = parseInt(document.getElementById('monthInput').value);
+      if (!year || !month || month < 1 || month > 12)
+        return alert('Введіть коректний рік і місяць!');
+      const lastDay = new Date(year, month, 0).getDate();
+      document.getElementById('lastDayResult').innerText =
+        `Останній день місяця: ${lastDay}`;
+    }
+
+    // ===== Завдання 2.3 =====
+    function getSecondsInfo() {
+      const now = new Date();
+      const secondsPassed = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+      const secondsToNextDay = 86400 - secondsPassed;
+      document.getElementById('secondsInfoResult').innerText =
+        `Від початку дня: ${secondsPassed} с\nДо початку наступного дня: ${secondsToNextDay} с`;
+    }
+
+    // ===== Завдання 3 =====
+    class Car {
+      constructor(brand, model, year) {
+        this.brand = brand;
+        this.model = model;
+        this.year = year;
+      }
+      info() {
+        return `Авто: ${this.brand} ${this.model}, ${this.year} року.`;
+      }
+    }
+
+    function createCar() {
+      const brand = document.getElementById('carBrand').value;
+      const model = document.getElementById('carModel').value;
+      const year = document.getElementById('carYear').value;
+      const car = new Car(brand, model, year);
+      document.getElementById('carInfo').innerText = car.info();
+    }
+
+    // ===== Завдання 4 =====
+    class ElectricCar extends Car {
+      constructor(brand, model, year, battery) {
+        super(brand, model, year);
+        this.battery = battery;
+      }
+      charge() {
+        return `${this.brand} ${this.model} заряджається... Батарея: ${this.battery} kWh`;
+      }
+    }
+
+    function createElectricCar() {
+      const brand = document.getElementById('eBrand').value;
+      const model = document.getElementById('eModel').value;
+      const year = document.getElementById('eYear').value;
+      const battery = document.getElementById('eBattery').value;
+      const car = new ElectricCar(brand, model, year, battery);
+      document.getElementById('eCarInfo').innerHTML =
+        `${car.info()}<br>${car.charge()}`;
+    }
+
+    // ===== Завдання 5 =====
+    class MathHelper {
+      static add(a, b) {
+        return a + b;
+      }
+    }
+
+    function useMathHelper() {
+      const a = parseFloat(document.getElementById('numA').value);
+      const b = parseFloat(document.getElementById('numB').value);
+      if (isNaN(a) || isNaN(b)) return alert('Введіть два числа!');
+      document.getElementById('mathResult').innerText =
+        `Сума: ${MathHelper.add(a, b)}`;
+    }
+
+    // ===== Завдання 6 =====
+    class Product {
+      constructor(name, price, quantity) {
+        this.name = name;
+        this.price = parseFloat(price);
+        this.quantity = parseInt(quantity);
+      }
+      totalCost() {
+        return this.price * this.quantity;
+      }
+    }
+
+    class DiscountProduct extends Product {
+      constructor(name, price, quantity, discount) {
+        super(name, price, quantity);
+        this.discount = parseFloat(discount);
+      }
+      getDiscountedPrice() {
+        return this.totalCost() * (1 - this.discount / 100);
+      }
+    }
+
+    function showProductInfo() {
+      const name = document.getElementById('pName').value;
+      const price = document.getElementById('pPrice').value;
+      const quantity = document.getElementById('pQuantity').value;
+      const discount = document.getElementById('pDiscount').value;
+      const product = new DiscountProduct(name, price, quantity, discount);
+      const result = `
+        Товар: ${product.name}<br>
+        Ціна: ${product.price} грн<br>
+        Кількість: ${product.quantity}<br>
+        Загальна вартість без знижки: ${product.totalCost().toFixed(2)} грн<br>
+        Вартість із знижкою ${product.discount}%: ${product.getDiscountedPrice().toFixed(2)} грн
+      `;
+      document.getElementById('productResult').innerHTML = result;
+    }
+
+    function clearProduct() {
+      ['pName', 'pPrice', 'pQuantity', 'pDiscount'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('productResult').innerHTML = '';
+    }
+  </script>
+</body>
+
+</html>
